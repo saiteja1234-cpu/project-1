@@ -14,7 +14,7 @@ const int trigPin1 = A2;
 const int echoPin1 = A3;
 const int trigPin2 = A4;
 const int echoPin2 = A5;
-49
+
 int lvl_wet = 0, lvl_dry = 0;
 int rtr1=0, rtr2=0;
 int dista=0;
@@ -38,7 +38,7 @@ unsigned int ultra_dist1() {
  distancemm1 = (duration1*0.17);
  ud1 = distancemm1;
  return ud1; }
-50
+
 unsigned int ultra_dist2()
 {int ud2=0;
  digitalWrite(trigPin2, LOW);
@@ -63,7 +63,7 @@ void serialFlush()
  while(Serial.available() > 0) {
  char t = Serial.read();
  }
-51
+
 }
 void myserialFlush()
 {
@@ -88,7 +88,7 @@ char check(char* ex,int timeout)
  res[i] = 0;break;
  }
  i++;
-52
+
  }
  j++;
  if(j == 30000)
@@ -113,7 +113,7 @@ char check(char* ex,int timeout)
  // Serial.print("Wrong ");
  // Serial.println(res);
  i=0;
-53
+
  goto sl;
  }
 }
@@ -135,7 +135,7 @@ void setup()
  pinMode(trigPin1, OUTPUT); // Sets the trigPin as an Output
  pinMode(echoPin1, INPUT); // Sets the echoPin as an Input
  pinMode(trigPin2, OUTPUT); // Sets the trigPin as an Output
-54
+
  pinMode(echoPin2, INPUT); // Sets the echoPin as an Input
 
  digitalWrite(relay, HIGH);
@@ -158,7 +158,7 @@ void setup()
  lcd.setCursor(0,1);
  lcd.print(" System ");
  delay(2500);
-55
+
  wifiinit();
  delay(2500);
  lcd.clear();
@@ -180,7 +180,7 @@ void loop()
 {
 memset(mos_string,'\0',strlen(mos_string));
 if(digitalRead(mos) == LOW)
-56
+
  {
  lcd.setCursor(2,0);lcd.print("Wet");
  strcpy(mos_string,"Wet");
@@ -204,7 +204,7 @@ if(digitalRead(smoke) == HIGH)
  strcpy(gas_string,"OFF");
  }
 if(digitalRead(ir) == LOW)
-57
+
  {
  lcd.setCursor(7,0);lcd.print("ON ");
  delay(3000);
@@ -229,7 +229,7 @@ if(digitalRead(ir) == LOW)
  upload(mos_string,lvl_wet,lvl_dry,gas_string);
  goto mn;
  }
-58
+
  if(digitalRead(mos) == HIGH)
  {
  lcd.setCursor(2,0);lcd.print("Dry");
@@ -254,7 +254,7 @@ if(digitalRead(ir) == LOW)
  delay(1500);
  }
 if(digitalRead(ir) == HIGH)
-59
+
  {
  lcd.setCursor(7,0);lcd.print("OFF");
  }
@@ -278,7 +278,7 @@ if(dist1 < 30)
 lvl_dry = map(dist1,190,30,0,100);
 lcd.setCursor(2,1);convertl(lvl_dry);
 for(rtr2=0;rtr2<5;rtr2++)
-60
+
  {
  dista = ultra_dist2();
  dist2 = (dist2 + dista);
@@ -303,7 +303,7 @@ if(lvl_dry > 80)
  if(sts1 == 1)
  {
  upload(mos_string,lvl_wet,lvl_dry,gas_string);
-61
+
  }
  }
 else
@@ -327,7 +327,7 @@ else
 char bf2[50];
 void upload(const char *s1,int s2,int s3,const char *s4)
 {
-62
+
  delay(2000);
  lcd.setCursor(15, 1);lcd.print("U");
  myserialFlush();
@@ -354,7 +354,7 @@ http://projectsfactoryserver.in/storedata.php?name=iot4&s1=%s\r\n\r\n",s1);
  delay(5000);
  myserialFlush();
  mySerial.print(buff);
-63
+
 
  delay(2000);
 
@@ -376,7 +376,7 @@ char readserver(void)
  sprintf(bf2,"AT+CIPSEND=4,%u",strlen(buff));
  mySerial.println(bf2);
  delay(5000);
-64
+
  myserialFlush();
  mySerial.print(buff);
  //read status
@@ -401,7 +401,7 @@ char readserver(void)
  lcd.setCursor(15, 1);lcd.print(" ");
  delay(2000);
 return t;
-65
+
 }
 void clearserver(void)
 {
@@ -426,7 +426,7 @@ http://projectsfactoryserver.in/storedata.php?name=iot4&s10=0\r\n\r\n");
  myserialFlush();
 
  mySerial.println("AT+CIPCLOSE");
-66
+
  lcd.setCursor(15, 1);lcd.print(" ");
  delay(2000);
 }
@@ -450,7 +450,7 @@ cagain:
  myserialFlush();
  mySerial.print("AT+CWJAP=\"");
  mySerial.print(ssid);
-67
+
  mySerial.print("\",\"");
  mySerial.print(password);
  mySerial.println("\"");
@@ -474,7 +474,7 @@ void converts(unsigned int value)
  c=c|0x30;
  e=e|0x30;
  g=g|0x30;
-68
+
  h=h|0x30;
 
  Serial.write(a);
@@ -497,7 +497,7 @@ void convertl(unsigned int value)
  a=a|0x30;
  c=c|0x30;
  e=e|0x30;
-69
+
  g=g|0x30;
  h=h|0x30;
 
@@ -519,7 +519,7 @@ void convertk(unsigned int value)
  g=f/10;
  h=f%10;
  a=a|0x30;
-70
+
  c=c|0x30;
  e=e|0x30;
  g=g|0x30;
